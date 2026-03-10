@@ -164,7 +164,6 @@ export const Content = () => {
                     sx={{ bgcolor: "#111" }}
                     onClick={() => {
                       addToCart(product.id);
-                      navigate("/purchases");
                     }}
                   >
                     Comprar
