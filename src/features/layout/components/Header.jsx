@@ -17,6 +17,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import {
   AppBar,
   Toolbar,
+  Badge,
   Button,
   Box,
   IconButton,
@@ -26,10 +27,28 @@ import {
   TextField,
   InputAdornment,
 } from "@mui/material";
+import {
+  FAVORITES_STORAGE_EVENT,
+  getFavoriteIds
+} from "../../view/utils/favoritesStorage";
 
 export const Header = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [query, setQuery] = React.useState("");
+  const [favoritesCount, setFavoritesCount] = React.useState(0);
+
+  React.useEffect(() => {
+    const syncFavoritesCount = () => setFavoritesCount(getFavoriteIds().length);
+
+    syncFavoritesCount();
+    window.addEventListener("storage", syncFavoritesCount);
+    window.addEventListener(FAVORITES_STORAGE_EVENT, syncFavoritesCount);
+
+    return () => {
+      window.removeEventListener("storage", syncFavoritesCount);
+      window.removeEventListener(FAVORITES_STORAGE_EVENT, syncFavoritesCount);
+    };
+  }, []);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -44,8 +63,21 @@ export const Header = () => {
     { to: "/article", label: "Artículos", icon: <ArticleIcon /> },
     { to: "/offers", label: "Ofertas", icon: <LocalOfferIcon /> },
     { to: "/account", label: "Mi Cuenta", icon: <PersonIcon /> },
+    {
+      to: "/favorites",
+      label: "Favoritos",
+      icon: (
+        <Badge
+          badgeContent={favoritesCount}
+          color="error"
+          max={99}
+          invisible={favoritesCount === 0}
+        >
+          <FavoriteIcon />
+        </Badge>
+      )
+    },
     { to: "/purchases", label: "Mis Compras", icon: <ShoppingBagIcon /> },
-    { to: "/favorites", label: "Favoritos", icon: <FavoriteIcon /> },
   ];
 
   //MUI COLORS
@@ -87,27 +119,35 @@ export const Header = () => {
                   to={item.to}
                   onClick={handleCloseNavMenu}
                 >
-                  {item.label}
+                  {item.to === "/favorites" ? `${item.label} (${favoritesCount})` : item.label}
                 </MenuItem>
               ))}
             </Menu>
           </Box>
 
           {/* TÍTULO */}
-          <Typography
-            variant="h6"
+          <Box
             component={NavLink}
             to="/"
             sx={{
               flexGrow: { xs: 1, md: 0 },
-              fontWeight: "bold",
-              color: "inherit",
               textDecoration: "none",
-              mr: { md: 5 }
+              mr: { md: 5 },
+              display: "flex",
+              alignItems: "center"
             }}
           >
-            Undergold
-          </Typography>
+            <Box
+              component="img"
+              src="/img/logoOficial.avif"
+              alt="Undergold"
+              sx={{
+                height: { xs: 20, md: 22 },
+                width: "auto",
+                display: "block"
+              }}
+            />
+          </Box>
 
           {/* MENÚ DESKTOP */}
           <Box

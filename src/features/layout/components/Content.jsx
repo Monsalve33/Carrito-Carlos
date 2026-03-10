@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -6,29 +6,34 @@ import {
   CardActions,
   CardContent,
   CardMedia,
-  Chip,
   Container,
   Grid,
   IconButton,
-  Stack,
   Typography
 } from "@mui/material";
-import { FaArrowRightLong, FaCartPlus, FaRegHeart, FaStar } from "react-icons/fa6";
+import { FaArrowRightLong, FaCartPlus, FaHeart, FaRegHeart } from "react-icons/fa6";
+import {
+  FAVORITES_STORAGE_EVENT,
+  getFavoriteIds,
+  toggleFavoriteId
+} from "../../view/utils/favoritesStorage";
+import { formatPrice, PRODUCTS } from "../../view/utils/productsCatalog";
 
 export const Content = () => {
-  const products = [
-    { title: "Shirt Burnt White", price: 150000, image: "/img/1.jpg"},
-    { title: "Hoodie Light Blue", price: 200000, image: "/img/2.jpg"},
-    { title: "Buzo Undergold - Negro", price: 180000, image: "/img/3.jpg"},
-    { title: "Jeans Brown", price: 120000, image: "/img/4.jpg" }
-  ];
+  const [favoriteIds, setFavoriteIds] = useState([]);
 
-  const formatPrice = (value) =>
-    new Intl.NumberFormat("es-CO", {
-      style: "currency",
-      currency: "COP",
-      maximumFractionDigits: 0
-    }).format(value);
+  useEffect(() => {
+    const syncFavorites = () => setFavoriteIds(getFavoriteIds());
+
+    syncFavorites();
+    window.addEventListener("storage", syncFavorites);
+    window.addEventListener(FAVORITES_STORAGE_EVENT, syncFavorites);
+
+    return () => {
+      window.removeEventListener("storage", syncFavorites);
+      window.removeEventListener(FAVORITES_STORAGE_EVENT, syncFavorites);
+    };
+  }, []);
 
   return (
     <Box
@@ -42,13 +47,13 @@ export const Content = () => {
         sx={{
           position: "relative",
           width: "100%",
-          height: "450px",
+          height: "500px",
           overflow: "hidden"
         }}
       >
         <CardMedia
           component="img"
-          image="https://clothesaid.co.uk/wp-content/uploads/2024/10/remarket-manchester.jpg"
+          image="https://undergoldapparel.com/cdn/shop/files/DSC00481.jpg"
           alt="Presentacion"
           sx={{
             width: "100%",
@@ -75,7 +80,7 @@ export const Content = () => {
           }}
         >
           <Typography variant="h3" fontWeight={700} sx={{ mb: 2 }}>
-            Bienvenido a Manchester Clothing
+            Bienvenido a Undergold
           </Typography>
 
           <Typography variant="h6" sx={{ mb: 3, maxWidth: 700 }}>
@@ -91,7 +96,7 @@ export const Content = () => {
 
       <Container maxWidth="lg" sx={{ py: 8 }}>
         <Grid container spacing={3}>
-          {products.map((product) => (
+          {PRODUCTS.map((product) => (
             <Grid size={{ xs: 12, sm: 6, md: 4 }} key={product.title}>
               <Card
                 sx={{
@@ -117,6 +122,7 @@ export const Content = () => {
                   />
 
                   <IconButton
+                    onClick={() => setFavoriteIds(toggleFavoriteId(product.id))}
                     sx={{
                       position: "absolute",
                       top: 8,
@@ -125,7 +131,11 @@ export const Content = () => {
                       "&:hover": { bgcolor: "#fff" }
                     }}
                   >
-                    <FaRegHeart size={15} />
+                    {favoriteIds.includes(product.id) ? (
+                      <FaHeart size={15} color="#d32f2f" />
+                    ) : (
+                      <FaRegHeart size={15} />
+                    )}
                   </IconButton>
                 </Box>
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -6,46 +6,35 @@ import {
   CardActions,
   CardContent,
   CardMedia,
-  Chip,
   Container,
   Grid,
   IconButton,
-  Stack,
   Typography
 } from "@mui/material";
-import { FaArrowRightLong, FaCartPlus, FaRegHeart, FaStar } from "react-icons/fa6";
-
-const products = [
-  {
-    title: "Shirt Burnt White",
-    price: 150000,
-    image: "/img/1.jpg"
-  },
-  {
-    title: "Hoodie Light Blue",
-    price: 200000,
-    image: "/img/2.jpg"
-  },
-  {
-    title: "Shorts Sandblast Grape",
-    price: 180000,
-    image: "/img/3.jpg"
-  },
-  {
-    title: "Jeans Brown",
-    price: 120000,
-    image: "/img/4.jpg"
-  },
-];
-
-const formatPrice = (value) =>
-  new Intl.NumberFormat("es-CO", {
-    style: "currency",
-    currency: "COP",
-    maximumFractionDigits: 0
-  }).format(value);
+import { FaArrowRightLong, FaCartPlus, FaHeart, FaRegHeart } from "react-icons/fa6";
+import {
+  FAVORITES_STORAGE_EVENT,
+  getFavoriteIds,
+  toggleFavoriteId
+} from "../utils/favoritesStorage";
+import { formatPrice, PRODUCTS } from "../utils/productsCatalog";
 
 export const Article = () => {
+  const [favoriteIds, setFavoriteIds] = useState([]);
+
+  useEffect(() => {
+    const syncFavorites = () => setFavoriteIds(getFavoriteIds());
+
+    syncFavorites();
+    window.addEventListener("storage", syncFavorites);
+    window.addEventListener(FAVORITES_STORAGE_EVENT, syncFavorites);
+
+    return () => {
+      window.removeEventListener("storage", syncFavorites);
+      window.removeEventListener(FAVORITES_STORAGE_EVENT, syncFavorites);
+    };
+  }, []);
+
   return (
     <Box
       sx={{
@@ -56,7 +45,7 @@ export const Article = () => {
     >
       <Container maxWidth="xl">
         <Grid container spacing={{ xs: 2, md: 3 }}>
-          {products.map((product) => (
+          {PRODUCTS.map((product) => (
             <Grid key={product.title} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
               <Card
                 sx={{
@@ -76,6 +65,7 @@ export const Article = () => {
                 <Box sx={{ position: "relative" }}>
                   <CardMedia component="img" image={product.image} alt={product.title} sx={{ height: 320 }} />
                   <IconButton
+                    onClick={() => setFavoriteIds(toggleFavoriteId(product.id))}
                     sx={{
                       position: "absolute",
                       top: 10,
@@ -84,7 +74,11 @@ export const Article = () => {
                       "&:hover": { bgcolor: "#fff" }
                     }}
                   >
-                    <FaRegHeart size={15} />
+                    {favoriteIds.includes(product.id) ? (
+                      <FaHeart size={15} color="#d32f2f" />
+                    ) : (
+                      <FaRegHeart size={15} />
+                    )}
                   </IconButton>
                 </Box>
 
