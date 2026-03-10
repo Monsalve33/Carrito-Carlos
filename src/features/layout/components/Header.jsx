@@ -26,7 +26,6 @@ import {
   TextField,
   InputAdornment,
 } from "@mui/material";
-import { grey } from "@mui/material/colors";
 
 export const Header = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -51,14 +50,18 @@ export const Header = () => {
 
   //MUI COLORS
   const styleAppBar = {
-    backgroundColor: grey[500],
-    color: "#ffffff"//Texto Oscuro para el constraste con el fondo claro,
+    backgroundColor: "#ffffff",
+    color: "#000000",
   };
 
   return (
     <>
       <AppBar position="fixed" style={styleAppBar}>
-        <Toolbar>
+        <Toolbar
+          sx={{
+            px: { xs: 2, md: 6 }
+          }}
+        >
 
           {/* MENÚ MOBILE */}
           <Box sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}>
@@ -96,17 +99,25 @@ export const Header = () => {
             component={NavLink}
             to="/"
             sx={{
-              flexGrow: 1,
+              flexGrow: { xs: 1, md: 0 },
               fontWeight: "bold",
               color: "inherit",
               textDecoration: "none",
+              mr: { md: 5 }
             }}
           >
-            Manchester Clothing
+            Undergold
           </Typography>
 
           {/* MENÚ DESKTOP */}
-          <Box sx={{ display: { xs: "none", md: "flex" }, gap: 1 }}>
+          <Box
+            sx={{
+              display: { xs: "none", md: "flex" },
+              gap: 2.5,
+              flexGrow: 1,
+              justifyContent: "center"
+            }}
+          >
             {navItems.map((item) => (
               <Button
                 key={item.to}
@@ -115,6 +126,8 @@ export const Header = () => {
                 to={item.to}
                 startIcon={item.icon}
                 sx={{
+                  px: 2.2,
+                  py: 0.4,
                   "&.active": {
                     bgcolor: "rgba(255,255,255,0.15)",
                   },
@@ -135,8 +148,8 @@ export const Header = () => {
               display: { xs: "none", md: "flex" },
               bgcolor: "white",
               borderRadius: 1,
-              minWidth: 220,
-              mx: 2,
+              minWidth: 260,
+              mx: 3,
               "& .MuiOutlinedInput-root": { bgcolor: "white" },
             }}
             InputProps={{
@@ -153,6 +166,7 @@ export const Header = () => {
             color="inherit"
             component={NavLink}
             to="/cart"
+            sx={{ ml: 1 }}
           >
             <ShoppingCartIcon />
           </IconButton>
