@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   Button,
@@ -17,9 +18,11 @@ import {
   getFavoriteIds,
   toggleFavoriteId
 } from "../utils/favoritesStorage";
+import { addToCart } from "../utils/cartStorage";
 import { formatPrice, PRODUCTS } from "../utils/productsCatalog";
 
 export const Article = () => {
+  const navigate = useNavigate();
   const [favoriteIds, setFavoriteIds] = useState([]);
 
   useEffect(() => {
@@ -101,7 +104,16 @@ export const Article = () => {
                   >
                     Ver
                   </Button>
-                  <Button fullWidth variant="contained" startIcon={<FaCartPlus />} sx={{ bgcolor: "#111" }}>
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    startIcon={<FaCartPlus />}
+                    sx={{ bgcolor: "#111" }}
+                    onClick={() => {
+                      addToCart(product.id);
+                      navigate("/purchases");
+                    }}
+                  >
                     Comprar
                   </Button>
                 </CardActions>

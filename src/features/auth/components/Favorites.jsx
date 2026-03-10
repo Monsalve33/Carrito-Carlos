@@ -11,11 +11,7 @@ import {
   Typography
 } from "@mui/material";
 import { FaHeart, FaRegHeart } from "react-icons/fa6";
-import {
-  FAVORITES_STORAGE_EVENT,
-  getFavoriteIds,
-  toggleFavoriteId
-} from "../../view/utils/favoritesStorage";
+import {FAVORITES_STORAGE_EVENT, getFavoriteIds, toggleFavoriteId} from "../../view/utils/favoritesStorage";
 import { formatPrice, PRODUCTS } from "../../view/utils/productsCatalog";
 
 export const Favorites = () => {

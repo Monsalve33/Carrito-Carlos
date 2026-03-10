@@ -31,11 +31,16 @@ import {
   FAVORITES_STORAGE_EVENT,
   getFavoriteIds
 } from "../../view/utils/favoritesStorage";
+import {
+  CART_STORAGE_EVENT,
+  getCartCount
+} from "../../view/utils/cartStorage";
 
 export const Header = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [query, setQuery] = React.useState("");
   const [favoritesCount, setFavoritesCount] = React.useState(0);
+  const [cartCount, setCartCount] = React.useState(0);
 
   React.useEffect(() => {
     const syncFavoritesCount = () => setFavoritesCount(getFavoriteIds().length);
@@ -47,6 +52,19 @@ export const Header = () => {
     return () => {
       window.removeEventListener("storage", syncFavoritesCount);
       window.removeEventListener(FAVORITES_STORAGE_EVENT, syncFavoritesCount);
+    };
+  }, []);
+
+  React.useEffect(() => {
+    const syncCartCount = () => setCartCount(getCartCount());
+
+    syncCartCount();
+    window.addEventListener("storage", syncCartCount);
+    window.addEventListener(CART_STORAGE_EVENT, syncCartCount);
+
+    return () => {
+      window.removeEventListener("storage", syncCartCount);
+      window.removeEventListener(CART_STORAGE_EVENT, syncCartCount);
     };
   }, []);
 
@@ -205,10 +223,17 @@ export const Header = () => {
           <IconButton
             color="inherit"
             component={NavLink}
-            to="/cart"
+            to="/purchases"
             sx={{ ml: 1 }}
           >
-            <ShoppingCartIcon />
+            <Badge
+              badgeContent={cartCount}
+              color="error"
+              max={99}
+              invisible={cartCount === 0}
+            >
+              <ShoppingCartIcon />
+            </Badge>
           </IconButton>
 
         </Toolbar>

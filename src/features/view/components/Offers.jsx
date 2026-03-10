@@ -7,6 +7,7 @@ import {UseReducerScore} from "../hooks/useReducer";
 import {UseOnline} from "../hooks/useOnline";
 import {UseMemoExample} from "../hooks/useMemo";
 import {UseCallbackExample} from "../hooks/useCallback";
+import {UseCustomCounter} from "../hooks/useCustomCounter";
 
 export const Offers = () => {
   return (
@@ -19,6 +20,7 @@ export const Offers = () => {
       <UseMemoExample></UseMemoExample>
       <UseCallbackExample></UseCallbackExample>
       <UseOnline></UseOnline>
+      <UseCustomCounter></UseCustomCounter>
     </>
   )
 }
