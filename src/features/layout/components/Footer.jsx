@@ -75,6 +75,7 @@ export const Footer = () => {
               <Grid size={{ xs: 6, sm: 3 }}>
                 <Typography sx={columnTitleSx}>Marca</Typography>
                 <Stack spacing={1.2}>
+                  <Link href="https://github.com/Monsalve33/Carrito-Carlos" sx={linkSx}>Repositorio GitHub</Link>
                   <Link href="#/" sx={linkSx}>Acerca de</Link>
                   <Link href="#/article" sx={linkSx}>Articulos</Link>
                 </Stack>
