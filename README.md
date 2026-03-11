@@ -68,7 +68,6 @@ Tecnologias utilizadas:
 - `ESLint`
 
 ## Datos importantes del Autor
-Completa o ajusta esta seccion con tus datos reales:
 
 - Autor: `Edward Alfonso Arrieta Monsalve`
 - Correo: `edwardarrietamonsa@gmail.com`
