@@ -70,11 +70,8 @@ Tecnologias utilizadas:
 ## Datos importantes del Autor
 Completa o ajusta esta seccion con tus datos reales:
 
-- Autor: `[Tu nombre completo]`
-- Correo: `[tu-correo@dominio.com]`
-- GitHub: `[https://github.com/tu-usuario]`
-- Institucion o curso: `[Nombre de la institucion o asignatura]`
-- Fecha: `Marzo 2026`
+- Autor: `Edward Alfonso Arrieta Monsalve`
+- Correo: `edwardarrietamonsa@gmail.com`
 
 ## Ejecucion local
 Para ejecutar el proyecto en desarrollo:
@@ -86,6 +83,6 @@ npm run dev
 
 Para generar una build de produccion:
 
-```bash
+```bash 
 npm run build
 ```
