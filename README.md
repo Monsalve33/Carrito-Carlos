@@ -1,18 +1,91 @@
-# React + Vite
+# Undergold
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Descripcion
+Undergold es una aplicacion web desarrollada con React y Vite orientada a la visualizacion de productos, ofertas y gestion basica de interacciones del usuario dentro de una tienda online. El proyecto incluye una interfaz moderna construida con Material UI, navegacion entre vistas y manejo local de favoritos, carrito y formulario de acceso con validaciones en frontend.
 
-Currently, two official plugins are available:
+## Caracteristicas principales
+- Navegacion SPA mediante `react-router-dom`.
+- Pagina principal con catalogo visual de productos.
+- Vista de ofertas y articulos destacados.
+- Seccion de favoritos usando almacenamiento local del navegador.
+- Seccion de compras con gestion de carrito en frontend.
+- Formulario de acceso con validaciones visuales del lado cliente.
+- Interfaz responsive apoyada en Material UI e iconografia moderna.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Interfaz grafica
+La interfaz fue planteada con un enfoque visual limpio y comercial, usando una barra de navegacion superior, tarjetas de producto, indicadores de favoritos y carrito, y una vista de cuenta con estilo elegante. La experiencia esta pensada para desktop y dispositivos moviles, manteniendo consistencia en colores, tipografia, espaciado y jerarquia visual.
 
-## React Compiler
+Pantallas principales:
+- `Inicio`: muestra productos destacados y accesos de compra.
+- `Articulos`: presenta contenido visual adicional del catalogo.
+- `Ofertas`: concentra productos o promociones especiales.
+- `Mi Cuenta`: contiene el formulario de login con validaciones frontend.
+- `Favoritos`: lista productos marcados por el usuario.
+- `Mis Compras`: visualiza el carrito o historial simulado de compras.
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+## Arquitectura del Proyecto
+El proyecto sigue una organizacion modular dentro de `src`, separando responsabilidades por funcionalidad:
 
-Note: This will impact Vite dev & build performances.
+```text
+src/
+  App.jsx
+  main.jsx
+  features/
+    auth/
+      components/
+        Account.jsx
+        Favorites.jsx
+        Purchases.jsx
+    layout/
+      components/
+        Header.jsx
+        Content.jsx
+        Footer.jsx
+    view/
+      components/
+        Article.jsx
+        Offers.jsx
+      hooks/
+      utils/
+        cartStorage.js
+        favoritesStorage.js
+        productsCatalog.js
+```
 
-## Expanding the ESLint configuration
+Descripcion general de capas:
+- `layout/components`: estructura comun de la aplicacion como encabezado, contenido principal y pie de pagina.
+- `auth/components`: vistas relacionadas con cuenta, favoritos y compras.
+- `view/components`: pantallas orientadas a la exploracion del contenido.
+- `view/utils`: utilidades para catalogo, favoritos y carrito con persistencia local.
+- `view/hooks`: ejemplos y practicas con hooks de React.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Tecnologias utilizadas:
+- `React 19`
+- `Vite`
+- `Material UI`
+- `React Router DOM`
+- `React Icons`
+- `ESLint`
+
+## Datos importantes del Autor
+Completa o ajusta esta seccion con tus datos reales:
+
+- Autor: `[Tu nombre completo]`
+- Correo: `[tu-correo@dominio.com]`
+- GitHub: `[https://github.com/tu-usuario]`
+- Institucion o curso: `[Nombre de la institucion o asignatura]`
+- Fecha: `Marzo 2026`
+
+## Ejecucion local
+Para ejecutar el proyecto en desarrollo:
+
+```bash
+npm install
+npm run dev
+```
+
+Para generar una build de produccion:
+
+```bash
+npm run build
+```

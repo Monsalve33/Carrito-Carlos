@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import {
   Box,
   Button,
@@ -13,16 +12,11 @@ import {
   Typography
 } from "@mui/material";
 import { FaArrowRightLong, FaCartPlus, FaHeart, FaRegHeart } from "react-icons/fa6";
-import {
-  FAVORITES_STORAGE_EVENT,
-  getFavoriteIds,
-  toggleFavoriteId
-} from "../../view/utils/favoritesStorage";
+import {FAVORITES_STORAGE_EVENT, getFavoriteIds, toggleFavoriteId} from "../../view/utils/favoritesStorage";
 import { addToCart } from "../../view/utils/cartStorage";
 import { formatPrice, PRODUCTS } from "../../view/utils/productsCatalog";
 
 export const Content = () => {
-  const navigate = useNavigate();
   const [favoriteIds, setFavoriteIds] = useState([]);
 
   useEffect(() => {
