@@ -96,7 +96,7 @@ export const Account = () => {
 
     setSubmitState({
       type: "success",
-      message: "Validacion frontend completada. El formulario esta listo para conectar con backend."
+      message: "Formulario enviado exisotamente."
     });
   };
 
